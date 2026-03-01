@@ -1,8 +1,18 @@
 'use client';
 
-import { Menu, Flame, Zap, User } from 'lucide-react';
+import { Menu, Flame, Zap, User, Settings, LogOut, FileText } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useGamificationStore } from '@/stores/gamificationStore';
+import { useUserStore } from '@/stores/userStore';
 import { Progress } from '@/components/ui/progress';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface TopbarProps {
     onMenuClick: () => void;
@@ -10,9 +20,29 @@ interface TopbarProps {
 }
 
 export default function Topbar({ onMenuClick, onDesktopMenuClick }: TopbarProps) {
-    const { level, streak, getProgress, getAvatarStage } = useGamificationStore();
+    const router = useRouter();
+    const { level, streak, getProgress, getAvatarStage, hydrateGamification } = useGamificationStore();
+    const { profile, setUserProfile, setOnboarded } = useUserStore();
     const progress = getProgress();
     const avatar = getAvatarStage();
+
+    const handleLogout = () => {
+        // Clear Zustand stores
+        setUserProfile({
+            name: '',
+            age: 0,
+            height: '',
+            weight: 0,
+            goals: [],
+            avatar: 'beginner',
+            createdAt: '',
+        });
+        setOnboarded(false);
+        hydrateGamification({ xp: 0, level: 1, streak: 0 });
+
+        // Redirect to landing page
+        router.push('/');
+    };
 
     return (
         <header className="sticky top-0 z-30 glass-card border-b border-border px-4 py-3">
@@ -59,9 +89,35 @@ export default function Topbar({ onMenuClick, onDesktopMenuClick }: TopbarProps)
                     </div>
 
                     {/* Avatar */}
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-violet-600 flex items-center justify-center glow cursor-pointer">
-                        <User size={18} className="text-white" />
-                    </div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-violet-600 flex items-center justify-center glow cursor-pointer hover:scale-105 transition-transform outline-none">
+                                <User size={18} className="text-white" />
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-56 bg-slate-950 border-white/10 text-white shadow-xl shadow-black/50 overflow-hidden">
+                            <DropdownMenuLabel className="font-normal py-3">
+                                <div className="flex flex-col space-y-1">
+                                    <p className="text-sm font-medium leading-none">{profile?.name || 'Explorer'}</p>
+                                    <p className="text-[10px] uppercase tracking-wider mt-1 text-teal-400">Level {level} {avatar.name}</p>
+                                </div>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator className="bg-white/10" />
+                            <DropdownMenuItem className="cursor-pointer hover:bg-white/5 focus:bg-white/5 py-2.5" onClick={() => router.push('/profile')}>
+                                <FileText className="mr-2 h-4 w-4 text-white/70" />
+                                <span>Profile</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer hover:bg-white/5 focus:bg-white/5 py-2.5" onClick={() => router.push('/settings')}>
+                                <Settings className="mr-2 h-4 w-4 text-white/70" />
+                                <span>Settings</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator className="bg-white/10" />
+                            <DropdownMenuItem className="cursor-pointer text-red-400 hover:bg-red-500/10 focus:bg-red-500/10 focus:text-red-400 py-2.5" onClick={handleLogout}>
+                                <LogOut className="mr-2 h-4 w-4" />
+                                <span>Logout</span>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </div>
         </header>

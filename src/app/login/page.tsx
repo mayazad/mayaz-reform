@@ -78,7 +78,7 @@ export default function LoginPage() {
                 });
 
                 // As requested, redirect directly to dashboard
-                router.push('/dashboard');
+                router.push('/onboarding');
             } else {
                 // Placeholder for actual login endpoint when built
                 router.push('/dashboard');
