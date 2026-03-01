@@ -12,8 +12,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
 
-    // Landing page gets a clean, standalone layout — no sidebar/topbar/mobile-nav
-    if (pathname === '/') {
+    // Landing page and onboarding get a clean, standalone layout — no sidebar/topbar/mobile-nav
+    const standaloneRoutes = ['/', '/onboarding'];
+    if (standaloneRoutes.includes(pathname)) {
         return <>{children}</>;
     }
 
