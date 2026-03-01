@@ -106,17 +106,18 @@ export default function DashboardPage() {
         <div className="absolute left-10 bottom-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Unified Flex Container */}
-        <div className="relative w-full flex flex-col md:flex-row items-center overflow-hidden rounded-2xl pt-6 pb-6 px-4 md:p-0 md:h-[300px] gap-2 md:gap-0">
-          {/* Left Column (The Avatar - Middle on mobile, Left on Desktop) */}
-          <div className="relative order-2 md:order-1 w-full md:w-1/3 h-[150px] sm:h-[180px] md:h-full flex items-end justify-center md:justify-end md:pr-8 z-10">
+        <div className="relative w-full flex flex-col md:flex-row items-center overflow-hidden rounded-2xl pt-6 pb-6 px-4 md:p-0 min-h-[350px] md:h-[300px] gap-2 md:gap-0">
+
+          {/* Avatar Area (Middle on mobile, Left on Desktop) */}
+          <div className="relative order-2 md:order-1 w-full md:w-[40%] h-[150px] sm:h-[180px] md:h-full flex items-end justify-center md:justify-end md:pr-8 z-10 shrink-0">
             <EvolvingAvatar level={level} />
           </div>
 
-          {/* Right Column (Uses 'contents' on mobile to participate in main flex container ordering) */}
-          <div className="contents md:flex md:relative md:w-2/3 md:flex-col md:items-start md:text-left md:justify-center md:pr-12 z-10">
-            {/* The Header Row (Top on mobile) */}
-            <div className="order-1 flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-1 md:mb-2 z-10">
-              <h1 className="text-3xl lg:text-4xl font-bold text-white text-center md:text-left">
+          {/* Text Area (Top on mobile, Right on Desktop) */}
+          <div className="relative order-1 md:order-2 flex-1 flex flex-col items-center md:items-start text-center md:text-left md:justify-center md:pr-12 md:pl-4 z-10 w-full">
+            {/* The Header Row */}
+            <div className="flex flex-col flex-wrap sm:flex-row items-center gap-2 sm:gap-4 mb-2 z-10 w-full justify-center md:justify-start">
+              <h1 className="text-3xl lg:text-4xl font-bold text-white">
                 {greeting}
               </h1>
               <Badge variant="secondary" className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 text-xs sm:text-sm">
@@ -124,13 +125,13 @@ export default function DashboardPage() {
               </Badge>
             </div>
 
-            {/* The Subtitle (Top on mobile) */}
-            <p className="order-1 text-sm text-white/80 max-w-sm drop-shadow mb-2 md:mb-8 text-center md:text-left z-10">
+            {/* The Subtitle */}
+            <p className="text-sm text-white/80 max-w-sm drop-shadow mb-4 md:mb-8 z-10">
               Just getting started
             </p>
 
-            {/* The XP Bar (Bottom on mobile) */}
-            <div className="order-3 w-full max-w-md mx-auto md:mx-0 mt-3 md:mt-4 z-10">
+            {/* The XP Bar (Desktop Only Location - Hidden on Mobile) */}
+            <div className="hidden md:block w-full max-w-md mt-4 z-10">
               <div className="flex justify-between items-end mb-2 drop-shadow">
                 <div className="flex flex-col text-left">
                   <span className="text-white/80 flex items-center gap-1.5 text-sm font-medium mb-1">
@@ -151,6 +152,30 @@ export default function DashboardPage() {
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-pulse" />
                 </motion.div>
               </div>
+            </div>
+          </div>
+
+          {/* The XP Bar (Mobile Only Location - Sits at bottom of stacking order) */}
+          <div className="order-3 md:hidden w-full max-w-md mx-auto mt-4 z-10">
+            <div className="flex justify-between items-end mb-2 drop-shadow">
+              <div className="flex flex-col text-left">
+                <span className="text-white/80 flex items-center gap-1.5 text-sm font-medium mb-1">
+                  <Sparkles size={14} className="text-cyan-400" />
+                  Level {level}
+                </span>
+                <span className="text-xs text-cyan-200/60 uppercase tracking-widest">{avatar.name} Stage</span>
+              </div>
+              <span className="text-cyan-300 font-bold text-sm bg-cyan-950/50 px-2 py-1 rounded-md border border-cyan-500/20">{progress.xp} / {progress.xpNeeded} XP</span>
+            </div>
+            <div className="h-3.5 sm:h-4 rounded-full bg-slate-900/60 overflow-hidden border border-white/10 shadow-inner">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${progress.percentage}%` }}
+                transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+                className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500 relative"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-pulse" />
+              </motion.div>
             </div>
           </div>
         </div>
