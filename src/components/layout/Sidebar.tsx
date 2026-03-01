@@ -22,8 +22,6 @@ const navItems = [
     { href: '/progress', label: 'Progress', icon: TrendingUp },
     { href: '/achievements', label: 'Achievements', icon: Trophy },
     { href: '/ai-coach', label: 'AI Coach', icon: Bot },
-    { href: '/profile', label: 'Profile', icon: User },
-    { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 interface SidebarProps {

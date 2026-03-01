@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu, Flame, Zap, User, Settings, LogOut, FileText } from 'lucide-react';
+import { Menu, Flame, Zap, User, Settings, LogOut, FileText, CreditCard, HelpCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useGamificationStore } from '@/stores/gamificationStore';
 import { useUserStore } from '@/stores/userStore';
@@ -104,17 +104,30 @@ export default function Topbar({ onMenuClick, onDesktopMenuClick }: TopbarProps)
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-white/10" />
                             <DropdownMenuItem className="cursor-pointer hover:bg-white/5 focus:bg-white/5 py-2.5" onClick={() => router.push('/profile')}>
-                                <FileText className="mr-2 h-4 w-4 text-white/70" />
-                                <span>Profile</span>
+                                <User className="mr-2 h-4 w-4 text-white/70" />
+                                <span>My Character</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem className="cursor-pointer hover:bg-white/5 focus:bg-white/5 py-2.5" onClick={() => router.push('/settings')}>
                                 <Settings className="mr-2 h-4 w-4 text-white/70" />
-                                <span>Settings</span>
+                                <span>Preferences</span>
                             </DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer hover:bg-white/5 focus:bg-white/5 py-2.5" onClick={() => router.push('/billing')}>
+                                <CreditCard className="mr-2 h-4 w-4 text-white/70" />
+                                <span>Forge Pass / Billing</span>
+                            </DropdownMenuItem>
+
                             <DropdownMenuSeparator className="bg-white/10" />
+
+                            <DropdownMenuItem className="cursor-pointer hover:bg-white/5 focus:bg-white/5 py-2.5" onClick={() => router.push('/support')}>
+                                <HelpCircle className="mr-2 h-4 w-4 text-white/70" />
+                                <span>Help & Support</span>
+                            </DropdownMenuItem>
+
+                            <DropdownMenuSeparator className="bg-white/10" />
+
                             <DropdownMenuItem className="cursor-pointer text-red-400 hover:bg-red-500/10 focus:bg-red-500/10 focus:text-red-400 py-2.5" onClick={handleLogout}>
                                 <LogOut className="mr-2 h-4 w-4" />
-                                <span>Logout</span>
+                                <span>Save & Quit</span>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
