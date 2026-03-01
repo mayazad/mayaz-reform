@@ -1,12 +1,12 @@
 import { UsersService } from './users.service';
+import { RegisterDto } from './dto/register.dto';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
-    register(body: any): Promise<{
-        email: string;
+    register(createDto: RegisterDto): Promise<{
         name: string | null;
+        email: string;
         id: string;
-        passwordHash: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
@@ -27,11 +27,9 @@ export declare class UsersController {
             sleepHours: number;
             userId: string;
         } | null;
-    } & {
-        email: string;
         name: string | null;
+        email: string;
         id: string;
-        passwordHash: string;
         createdAt: Date;
         updatedAt: Date;
     }>;

@@ -1,12 +1,12 @@
 import { PrismaService } from '../prisma/prisma.service';
+import { RegisterDto } from './dto/register.dto';
 export declare class UsersService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    createUser(data: any): Promise<{
-        email: string;
+    createUser(data: RegisterDto): Promise<{
         name: string | null;
+        email: string;
         id: string;
-        passwordHash: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
@@ -27,11 +27,9 @@ export declare class UsersService {
             sleepHours: number;
             userId: string;
         } | null;
-    } & {
-        email: string;
         name: string | null;
+        email: string;
         id: string;
-        passwordHash: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
