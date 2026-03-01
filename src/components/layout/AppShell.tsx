@@ -1,14 +1,21 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Sidebar from '@/components/layout/Sidebar';
 import Topbar from '@/components/layout/Topbar';
 import MobileNav from '@/components/layout/MobileNav';
 import { PageTransition } from '@/components/PageTransition';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
+
+    // Landing page gets a clean, standalone layout — no sidebar/topbar/mobile-nav
+    if (pathname === '/') {
+        return <>{children}</>;
+    }
 
     return (
         <div className="flex h-screen overflow-hidden">

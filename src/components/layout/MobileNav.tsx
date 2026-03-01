@@ -6,7 +6,7 @@ import { LayoutDashboard, Dumbbell, UtensilsCrossed, TrendingUp, Bot } from 'luc
 import { motion } from 'framer-motion';
 
 const items = [
-    { href: '/', icon: LayoutDashboard, label: 'Home' },
+    { href: '/dashboard', icon: LayoutDashboard, label: 'Home' },
     { href: '/workouts', icon: Dumbbell, label: 'Workouts' },
     { href: '/diet', icon: UtensilsCrossed, label: 'Diet' },
     { href: '/progress', icon: TrendingUp, label: 'Progress' },
