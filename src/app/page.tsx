@@ -591,7 +591,7 @@ export default function DashboardPage() {
                       className={`flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/15 ${action.hoverBg} transition-all duration-300 cursor-pointer group`}
                     >
                       <div className="p-1.5 rounded-lg bg-white/5 group-hover:bg-white/10 transition-colors">
-                        <action.icon size={14} className={action.color} />
+                        <action.icon size={14} className={`${action.color} transition-transform duration-300 group-hover:scale-110`} />
                       </div>
                       <span className="text-sm flex-1">{action.label}</span>
                       <ChevronRight size={14} className="text-muted-foreground group-hover:text-foreground transition-colors" />

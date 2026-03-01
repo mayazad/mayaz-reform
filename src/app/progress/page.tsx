@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { TrendingDown, TrendingUp, Plus, Scale, Ruler } from 'lucide-react';
+import { TrendingDown, TrendingUp, Plus, Scale, Ruler, Weight, Maximize2, Ratio } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -59,7 +59,7 @@ export default function ProgressPage() {
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold mb-1">Progress Tracker</h1>
-                        <p className="text-sm text-muted-foreground">Visualize your transformation journey 📊</p>
+                        <p className="text-sm text-muted-foreground">Visualize your transformation journey.</p>
                     </div>
                     <Button
                         onClick={() => setShowForm(!showForm)}
@@ -139,23 +139,23 @@ export default function ProgressPage() {
                     {
                         label: 'Chest',
                         value: latest?.chest ? `${latest.chest}"` : '—',
-                        icon: Ruler,
+                        icon: Maximize2,
                         color: 'text-violet-400',
                         bg: 'from-violet-500/10 to-purple-500/10',
                     },
                     {
                         label: 'Waist',
                         value: latest?.waist ? `${latest.waist}"` : '—',
-                        icon: Ruler,
+                        icon: Ratio,
                         color: 'text-amber-400',
                         bg: 'from-amber-500/10 to-orange-500/10',
                     },
                 ].map((stat, i) => (
                     <motion.div key={stat.label} custom={i + 1} initial="hidden" animate="visible" variants={fadeUp}>
-                        <Card className={`bg-gradient-to-br ${stat.bg} border-white/5`}>
+                        <Card className={`group bg-gradient-to-br ${stat.bg} border-white/5`}>
                             <CardContent className="p-4">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <stat.icon size={16} className={stat.color} />
+                                    <stat.icon size={16} className={`${stat.color} transition-transform duration-300 group-hover:scale-110`} />
                                     <span className="text-xs text-muted-foreground">{stat.label}</span>
                                 </div>
                                 <p className={`text-xl font-bold ${stat.color}`}>{stat.value}</p>
@@ -251,11 +251,23 @@ export default function ProgressPage() {
                     <CardContent>
                         <div className="space-y-2">
                             {[...entries].reverse().map((entry, i) => (
-                                <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-white/3 border border-white/5">
+                                <div key={i} className="flex items-center gap-3 flex-wrap p-3 rounded-xl bg-white/3 border border-white/5">
                                     <span className="text-xs text-muted-foreground w-20">{entry.date}</span>
-                                    {entry.weight && <Badge variant="secondary" className="text-[10px]">⚖️ {entry.weight}kg</Badge>}
-                                    {entry.chest && <Badge variant="secondary" className="text-[10px]">📏 Chest: {entry.chest}&quot;</Badge>}
-                                    {entry.waist && <Badge variant="secondary" className="text-[10px]">📐 Waist: {entry.waist}&quot;</Badge>}
+                                    {entry.weight && (
+                                        <Badge variant="secondary" className="text-[10px] flex items-center gap-1">
+                                            <Scale size={10} className="text-cyan-400" />{entry.weight} kg
+                                        </Badge>
+                                    )}
+                                    {entry.chest && (
+                                        <Badge variant="secondary" className="text-[10px] flex items-center gap-1">
+                                            <Maximize2 size={10} className="text-violet-400" />Chest: {entry.chest}&quot;
+                                        </Badge>
+                                    )}
+                                    {entry.waist && (
+                                        <Badge variant="secondary" className="text-[10px] flex items-center gap-1">
+                                            <Ratio size={10} className="text-amber-400" />Waist: {entry.waist}&quot;
+                                        </Badge>
+                                    )}
                                 </div>
                             ))}
                         </div>

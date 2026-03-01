@@ -96,7 +96,7 @@ export default function Sidebar({ isOpen, onClose, desktopOpen = true }: Sidebar
                                                 transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                                             />
                                         )}
-                                        <Icon size={18} className="relative z-10" />
+                                        <Icon size={18} className={`relative z-10 transition-transform duration-300 group-hover:scale-110 ${isActive ? 'text-cyan-400' : ''}`} />
                                         <span className="relative z-10">{item.label}</span>
                                         {isActive && (
                                             <motion.div
