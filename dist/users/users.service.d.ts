@@ -18,9 +18,9 @@ export declare class UsersService {
             level: number;
             currentXp: number;
             streak: number;
-            baseStats: import("@prisma/client/runtime/client").JsonValue | null;
+            baseStats: import("@prisma/client/runtime/library").JsonValue | null;
             primaryClass: string | null;
-            focusAreas: import("@prisma/client/runtime/client").JsonValue | null;
+            focusAreas: import("@prisma/client/runtime/library").JsonValue | null;
             dietPref: string | null;
             waterGlasses: number;
             waterGoal: number;
