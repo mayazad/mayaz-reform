@@ -9,10 +9,10 @@ interface EvolvingAvatarProps {
 
 export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
     const getStage = (lvl: number) => {
-        if (lvl <= 10) return { id: 1, name: 'Starting Out', description: 'Body Stage 1: Soft', gradient: 'from-slate-400 to-slate-600', imagePath: '/avatars/stage-1.svg' };
-        if (lvl <= 25) return { id: 2, name: 'Leaning Down', description: 'Body Stage 2: Toned', gradient: 'from-cyan-400 to-blue-600', imagePath: '/avatars/stage-2.svg' };
-        if (lvl <= 40) return { id: 3, name: 'Building Muscle', description: 'Body Stage 3: Muscular', gradient: 'from-violet-400 to-purple-600', imagePath: '/avatars/stage-3.svg' };
-        return { id: 4, name: 'Goal Physique', description: 'Body Stage 4: Shredded', gradient: 'from-orange-400 to-red-600', imagePath: '/avatars/stage-4.svg' };
+        if (lvl <= 10) return { id: 1, name: 'Starting Out', description: 'Body Stage 1: Soft', gradient: 'from-slate-400 to-slate-600', imagePath: '/avatars/stage-1.png' };
+        if (lvl <= 25) return { id: 2, name: 'Leaning Down', description: 'Body Stage 2: Toned', gradient: 'from-cyan-400 to-blue-600', imagePath: '/avatars/stage-2.png' };
+        if (lvl <= 40) return { id: 3, name: 'Building Muscle', description: 'Body Stage 3: Muscular', gradient: 'from-violet-400 to-purple-600', imagePath: '/avatars/stage-3.png' };
+        return { id: 4, name: 'Goal Physique', description: 'Body Stage 4: Shredded', gradient: 'from-orange-400 to-red-600', imagePath: '/avatars/stage-4.png' };
     };
 
     const stage = getStage(level);
