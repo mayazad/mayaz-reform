@@ -106,10 +106,15 @@ export default function DashboardPage() {
         <div className="absolute left-10 bottom-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Unified Flex Container */}
-        <div className="relative w-full flex flex-col items-center justify-between overflow-hidden rounded-2xl p-6 md:p-8 gap-4">
+        <div className="relative w-full min-h-[350px] md:h-[300px] flex flex-col md:flex-row items-center overflow-hidden rounded-2xl pt-8 md:pt-0">
+          {/* Left Column (The Avatar - 30% width) */}
+          <div className="relative order-2 md:order-1 w-full md:w-1/3 h-[220px] md:h-full flex items-end justify-center md:justify-end md:pr-8 z-10 mt-6 md:mt-0">
+            <EvolvingAvatar level={level} />
+          </div>
 
-          {/* Top Section (Header & Text) */}
-          <div className="flex flex-col items-center text-center z-10">
+          {/* Right Column (The Text & Progress - 70% width) */}
+          <div className="relative order-1 md:order-2 w-full md:w-2/3 flex flex-col items-center md:items-start text-center md:text-left px-6 md:px-0 md:pr-12 z-10">
+            {/* The Header Row */}
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-2">
               <h1 className="text-4xl font-bold text-white">
                 {greeting}
@@ -118,40 +123,36 @@ export default function DashboardPage() {
                 Lv. {level} {avatar.name}
               </Badge>
             </div>
-            <p className="text-sm text-white/80 max-w-sm drop-shadow">
+
+            {/* The Subtitle */}
+            <p className="text-sm text-white/80 max-w-sm drop-shadow mb-8">
               Just getting started
             </p>
-          </div>
 
-          {/* Middle Section (The Avatar) */}
-          <div className="relative w-full h-[160px] sm:h-[180px] md:h-[220px] flex justify-center z-10">
-            <EvolvingAvatar level={level} />
-          </div>
-
-          {/* Bottom Section (The XP Bar) */}
-          <div className="w-full max-w-md flex flex-col items-center z-10">
-            <div className="w-full flex justify-between items-end mb-2 drop-shadow">
-              <div className="flex flex-col text-left">
-                <span className="text-white/80 flex items-center gap-1.5 text-sm font-medium mb-1">
-                  <Sparkles size={14} className="text-cyan-400" />
-                  Level {level}
-                </span>
-                <span className="text-xs text-cyan-200/60 uppercase tracking-widest">{avatar.name} Stage</span>
+            {/* The XP Bar */}
+            <div className="w-full max-w-md mx-auto md:mx-0 mt-4">
+              <div className="flex justify-between items-end mb-2 drop-shadow">
+                <div className="flex flex-col text-left">
+                  <span className="text-white/80 flex items-center gap-1.5 text-sm font-medium mb-1">
+                    <Sparkles size={14} className="text-cyan-400" />
+                    Level {level}
+                  </span>
+                  <span className="text-xs text-cyan-200/60 uppercase tracking-widest">{avatar.name} Stage</span>
+                </div>
+                <span className="text-cyan-300 font-bold text-sm bg-cyan-950/50 px-2 py-1 rounded-md border border-cyan-500/20">{progress.xp} / {progress.xpNeeded} XP</span>
               </div>
-              <span className="text-cyan-300 font-bold text-sm bg-cyan-950/50 px-2 py-1 rounded-md border border-cyan-500/20">{progress.xp} / {progress.xpNeeded} XP</span>
-            </div>
-            <div className="w-full h-3.5 sm:h-4 rounded-full bg-slate-900/60 overflow-hidden border border-white/10 shadow-inner">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${progress.percentage}%` }}
-                transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
-                className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500 relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-pulse" />
-              </motion.div>
+              <div className="h-3.5 sm:h-4 rounded-full bg-slate-900/60 overflow-hidden border border-white/10 shadow-inner">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress.percentage}%` }}
+                  transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+                  className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500 relative"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-pulse" />
+                </motion.div>
+              </div>
             </div>
           </div>
-
         </div>
       </motion.div>
 
