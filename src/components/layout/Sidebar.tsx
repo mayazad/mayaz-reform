@@ -29,9 +29,10 @@ const navItems = [
 interface SidebarProps {
     isOpen: boolean;
     onClose: () => void;
+    desktopOpen?: boolean;
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen, onClose, desktopOpen = true }: SidebarProps) {
     const pathname = usePathname();
 
     return (
@@ -45,10 +46,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             )}
 
             <aside
-                className={`fixed top-0 left-0 h-full z-50 w-64 glass-card border-r border-border
-          transition-transform duration-300 ease-in-out
-          lg:translate-x-0 lg:static lg:z-auto
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+                className={`fixed top-0 left-0 h-full z-50 glass-card border-r border-border
+          transition-all duration-300 ease-in-out overflow-hidden
+          ${isOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'}
+          ${desktopOpen ? 'lg:translate-x-0 lg:static lg:z-auto lg:w-64 lg:px-0' : 'lg:-translate-x-full lg:w-0 lg:border-none lg:px-0 lg:opacity-0 lg:absolute'}
         `}
             >
                 {/* Logo */}

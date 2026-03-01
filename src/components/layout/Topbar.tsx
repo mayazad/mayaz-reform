@@ -6,9 +6,10 @@ import { Progress } from '@/components/ui/progress';
 
 interface TopbarProps {
     onMenuClick: () => void;
+    onDesktopMenuClick?: () => void;
 }
 
-export default function Topbar({ onMenuClick }: TopbarProps) {
+export default function Topbar({ onMenuClick, onDesktopMenuClick }: TopbarProps) {
     const { level, streak, getProgress, getAvatarStage } = useGamificationStore();
     const progress = getProgress();
     const avatar = getAvatarStage();
@@ -24,6 +25,14 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                     >
                         <Menu size={22} />
                     </button>
+                    {onDesktopMenuClick && (
+                        <button
+                            onClick={onDesktopMenuClick}
+                            className="hidden lg:block text-muted-foreground hover:text-foreground transition-colors p-1"
+                        >
+                            <Menu size={22} />
+                        </button>
+                    )}
                     <div className="hidden sm:block">
                         <h2 className="text-sm font-medium text-muted-foreground">Welcome back</h2>
                     </div>
