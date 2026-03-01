@@ -30,6 +30,14 @@ const fadeUp = {
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+function getTimeGreetingAndGradient() {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return { greeting: 'Good Morning!', gradient: 'from-orange-500/20 to-blue-500/10' };
+  if (hour >= 12 && hour < 17) return { greeting: 'Good Afternoon!', gradient: 'from-teal-500/20 to-blue-600/10' };
+  if (hour >= 17 && hour < 21) return { greeting: 'Good Evening!', gradient: 'from-purple-500/20 to-pink-500/10' };
+  return { greeting: 'Good Night!', gradient: 'from-slate-900 to-indigo-900/40' };
+}
+
 
 
 export default function DashboardPage() {
@@ -39,6 +47,7 @@ export default function DashboardPage() {
   const progress = getProgress();
   const avatar = getAvatarForLevel(level);
   const quote = getDailyQuote();
+  const { greeting, gradient } = getTimeGreetingAndGradient();
 
   const todayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
   const today = weeklyPlan[todayIndex];
@@ -87,47 +96,50 @@ export default function DashboardPage() {
         initial="hidden"
         animate="visible"
         variants={fadeUp}
-        className="relative overflow-hidden rounded-2xl bg-slate-900/50 backdrop-blur-xl border border-white/10 p-6 sm:p-8"
+        className={`relative overflow-hidden rounded-2xl bg-gradient-to-r ${gradient} backdrop-blur-md border border-white/10`}
       >
         {/* Ambient glow blobs */}
-        <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-cyan-500/20 to-violet-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-fuchsia-500/15 to-cyan-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 
-        <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-6">
-          <EvolvingAvatar level={level} />
+        {/* Unified Flex Container */}
+        <div className="relative flex flex-row items-end overflow-hidden h-[240px] sm:h-[280px]">
+          {/* Avatar Area (Left) */}
+          <div className="relative z-10 pl-2 sm:pl-8">
+            <EvolvingAvatar level={level} />
+          </div>
 
-          {/* Info */}
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <h1 className="text-2xl sm:text-3xl font-bold">
-                Good {new Date().getHours() < 12 ? 'Morning' : new Date().getHours() < 17 ? 'Afternoon' : 'Evening'}!
+          {/* User Info (Right) */}
+          <div className="flex-1 p-6 sm:p-8 relative z-20 flex flex-col justify-center h-full sm:pl-4">
+            <div className="flex items-center gap-2 mb-2 flex-wrap drop-shadow-md">
+              <h1 className="text-2xl sm:text-4xl font-bold text-white">
+                {greeting}
               </h1>
-              <Badge variant="secondary" className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30">
-                {avatar.name}
+              <Badge variant="secondary" className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 text-xs sm:text-sm">
+                Lv. {level} {avatar.name}
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground mb-3">
-              Level {level} • {avatar.description}
+            <p className="text-sm text-white/80 mb-6 max-w-sm drop-shadow">
+              {avatar.description}
             </p>
+
             {/* XP Bar */}
-            <div className="flex items-center gap-4">
-              <div className="flex-1 max-w-xs">
-                <div className="flex justify-between text-xs mb-1">
-                  <span className="text-muted-foreground flex items-center gap-1">
-                    <Sparkles size={12} className="text-cyan-400" /> XP Progress
-                  </span>
-                  <span className="text-cyan-400 font-medium">{progress.xp}/{progress.xpNeeded}</span>
-                </div>
-                <div className="h-3 rounded-full bg-white/5 overflow-hidden border border-white/5">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${progress.percentage}%` }}
-                    transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
-                    className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500 relative"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-pulse" />
-                  </motion.div>
-                </div>
+            <div className="max-w-md w-full">
+              <div className="flex justify-between text-xs mb-1.5 drop-shadow">
+                <span className="text-white/80 flex items-center gap-1">
+                  <Sparkles size={12} className="text-cyan-400" /> XP Progress
+                </span>
+                <span className="text-cyan-300 font-bold">{progress.xp}/{progress.xpNeeded}</span>
+              </div>
+              <div className="h-3.5 sm:h-4 rounded-full bg-slate-900/60 overflow-hidden border border-white/10 shadow-inner">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress.percentage}%` }}
+                  transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+                  className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500 relative"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-pulse" />
+                </motion.div>
               </div>
             </div>
           </div>

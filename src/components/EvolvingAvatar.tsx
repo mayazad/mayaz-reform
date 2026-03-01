@@ -18,49 +18,47 @@ export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
     const stage = getStage(level);
 
     return (
-        <div className="relative w-32 h-44 sm:w-40 sm:h-56 rounded-2xl p-[2px] cursor-pointer group flex-shrink-0 mt-2 sm:mt-0">
-            {/* Outer neon glow ring */}
-            <div className={`absolute -inset-1 rounded-2xl bg-gradient-to-br ${stage.gradient} opacity-50 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500`} />
+        <div className="relative w-[140px] h-[220px] sm:w-[200px] sm:h-[260px] flex-shrink-0 group">
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={stage.id}
+                    initial={{ opacity: 0, x: -20, filter: 'blur(8px)' }}
+                    animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, x: -20, filter: 'blur(8px)' }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    className="absolute inset-0 w-full h-full flex flex-col items-center justify-end"
+                >
+                    {/* Character Visual */}
+                    <div className="relative w-full h-[90%] z-10 drop-shadow-2xl">
+                        {/* Soft behind glow */}
+                        <div className={`absolute inset-0 bg-gradient-to-t ${stage.gradient} opacity-20 blur-2xl rounded-full scale-110 pointer-events-none`} />
+                        <Image
+                            src={stage.imagePath}
+                            alt={stage.name}
+                            fill
+                            className="object-contain object-bottom"
+                            priority
+                        />
+                    </div>
 
-            {/* Container */}
-            <div className="relative w-full h-full rounded-[14px] bg-slate-900/80 backdrop-blur-sm overflow-hidden flex flex-col items-center justify-center border border-white/5 shadow-2xl">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={stage.id}
-                        initial={{ opacity: 0, scale: 0.9, filter: 'blur(8px)' }}
-                        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                        exit={{ opacity: 0, scale: 1.1, filter: 'blur(8px)' }}
-                        transition={{ duration: 0.6, ease: 'easeOut' }}
-                        className={`w-full h-full flex flex-col items-center shadow-inner bg-gradient-to-br ${stage.gradient} bg-opacity-10`}
-                    >
-                        {/* Full-body visual */}
-                        <div className="flex-1 flex items-center justify-center w-full relative p-4">
-                            {/* Silhouette glow */}
-                            <div className="absolute inset-0 bg-white/5 blur-xl rounded-full scale-150 animate-pulse" />
-                            <div className="relative w-full h-full z-10 drop-shadow-xl filter">
-                                <Image
-                                    src={stage.imagePath}
-                                    alt={stage.name}
-                                    fill
-                                    className="object-contain"
-                                    priority
-                                />
-                            </div>
-                        </div>
+                    {/* Stage Label overlapping character's feet slightly */}
+                    <div className="relative z-20 mt-[-10px] bg-slate-900/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 shadow-xl group-hover:border-white/30 transition-colors">
+                        <p className="text-[10px] sm:text-xs font-bold text-white text-center tracking-wider">{stage.name}</p>
+                    </div>
+                </motion.div>
+            </AnimatePresence>
 
-                        {/* Label Base */}
-                        <div className="bg-slate-950/80 backdrop-blur-md w-full p-2.5 sm:p-3 mt-auto border-t border-white/10 z-20">
-                            <p className="text-[11px] sm:text-xs font-bold text-white mb-0.5 text-center truncate">{stage.name}</p>
-                            <p className="text-[9px] sm:text-[10px] text-white/60 text-center truncate">{stage.description}</p>
-                        </div>
-                    </motion.div>
-                </AnimatePresence>
-            </div>
-
-            {/* Level Badge Overlay */}
-            <div className="absolute -top-3 -right-3 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900 flex items-center justify-center shadow-2xl border border-white/10 z-30">
-                <div className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br ${stage.gradient} flex items-center justify-center text-xs sm:text-sm font-black text-white ring-2 ring-slate-900/50 shadow-inner`}>
-                    {level}
+            {/* Level Badge Overlay (Top Left) */}
+            <div className="absolute top-2 -left-2 sm:top-4 sm:-left-4 z-30 drop-shadow-2xl group-hover:scale-110 transition-transform">
+                <div className="relative w-10 h-10 sm:w-14 sm:h-14">
+                    {/* Outer hexagon/circle shape glow */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${stage.gradient} rounded-xl rotate-45 opacity-70 blur-sm`} />
+                    <div className={`absolute inset-0 bg-gradient-to-br ${stage.gradient} rounded-xl rotate-45 border border-white/30 flex items-center justify-center shadow-inner`} />
+                    <div className="absolute inset-0 flex items-center justify-center -rotate-45">
+                        <span className="text-white font-black text-sm sm:text-lg drop-shadow-md">
+                            {level}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
