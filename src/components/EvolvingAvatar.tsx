@@ -18,7 +18,7 @@ export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
     const stage = getStage(level);
 
     return (
-        <div className="relative w-[140px] h-[220px] sm:w-[200px] sm:h-[260px] flex-shrink-0 group">
+        <div className="absolute bottom-0 left-0 w-[200px] h-[280px] sm:w-[280px] sm:h-[320px] flex-shrink-0 group z-10 pointer-events-none">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={stage.id}
@@ -29,9 +29,9 @@ export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
                     className="absolute inset-0 w-full h-full flex flex-col items-center justify-end"
                 >
                     {/* Character Visual */}
-                    <div className="relative w-full h-[90%] z-10 drop-shadow-2xl">
-                        {/* Soft behind glow */}
-                        <div className={`absolute inset-0 bg-gradient-to-t ${stage.gradient} opacity-20 blur-2xl rounded-full scale-110 pointer-events-none`} />
+                    <div className="absolute inset-x-0 bottom-0 w-full h-full z-10 drop-shadow-[0_20px_20px_rgba(0,0,0,0.5)]">
+                        {/* Soft behind glow matching outfit */}
+                        <div className={`absolute bottom-10 left-1/2 -translate-x-1/2 w-40 h-40 bg-gradient-to-t ${stage.gradient} opacity-20 blur-[40px] rounded-full pointer-events-none`} />
                         <Image
                             src={stage.imagePath}
                             alt={stage.name}
@@ -40,16 +40,11 @@ export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
                             priority
                         />
                     </div>
-
-                    {/* Stage Label overlapping character's feet slightly */}
-                    <div className="relative z-20 mt-[-10px] bg-slate-900/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 shadow-xl group-hover:border-white/30 transition-colors">
-                        <p className="text-[10px] sm:text-xs font-bold text-white text-center tracking-wider">{stage.name}</p>
-                    </div>
                 </motion.div>
             </AnimatePresence>
 
             {/* Level Badge Overlay (Top Left) */}
-            <div className="absolute top-2 -left-2 sm:top-4 sm:-left-4 z-30 drop-shadow-2xl group-hover:scale-110 transition-transform">
+            <div className="absolute top-10 left-2 sm:top-16 sm:-left-2 z-30 drop-shadow-2xl pointer-events-auto cursor-help group-hover:scale-110 transition-transform">
                 <div className="relative w-10 h-10 sm:w-14 sm:h-14">
                     {/* Outer hexagon/circle shape glow */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${stage.gradient} rounded-xl rotate-45 opacity-70 blur-sm`} />
@@ -61,6 +56,6 @@ export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

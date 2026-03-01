@@ -32,10 +32,10 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 
 function getTimeGreetingAndGradient() {
   const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return { greeting: 'Good Morning!', gradient: 'from-orange-500/20 to-blue-500/10' };
-  if (hour >= 12 && hour < 17) return { greeting: 'Good Afternoon!', gradient: 'from-teal-500/20 to-blue-600/10' };
-  if (hour >= 17 && hour < 21) return { greeting: 'Good Evening!', gradient: 'from-purple-500/20 to-pink-500/10' };
-  return { greeting: 'Good Night!', gradient: 'from-slate-900 to-indigo-900/40' };
+  if (hour >= 5 && hour < 12) return { greeting: 'Good Morning!', gradient: 'from-orange-900/80 via-rose-900/40 to-slate-900' };
+  if (hour >= 12 && hour < 17) return { greeting: 'Good Afternoon!', gradient: 'from-teal-900/80 via-blue-900/40 to-slate-900' };
+  if (hour >= 17 && hour < 21) return { greeting: 'Good Evening!', gradient: 'from-purple-900/80 via-fuchsia-900/40 to-slate-900' };
+  return { greeting: 'Good Night!', gradient: 'from-indigo-950 via-purple-900/40 to-slate-900' };
 }
 
 
@@ -96,40 +96,45 @@ export default function DashboardPage() {
         initial="hidden"
         animate="visible"
         variants={fadeUp}
-        className={`relative overflow-hidden rounded-2xl bg-gradient-to-r ${gradient} backdrop-blur-md border border-white/10`}
+        className={`relative overflow-hidden rounded-2xl bg-gradient-to-r ${gradient} backdrop-blur-md border border-white/10 shadow-2xl`}
       >
-        {/* Ambient glow blobs */}
+        {/* Deep grid background pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+        {/* Ambient glow blobs & Spotlight for Avatar */}
         <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+        <div className="absolute left-10 bottom-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Unified Flex Container */}
-        <div className="relative flex flex-row items-end overflow-hidden h-[240px] sm:h-[280px]">
-          {/* Avatar Area (Left) */}
-          <div className="relative z-10 pl-2 sm:pl-8">
+        <div className="relative flex flex-row items-stretch min-h-[280px]">
+          {/* Avatar Area (Left - approx 1/3) */}
+          <div className="relative w-[35%] min-w-[200px] sm:min-w-[280px]">
             <EvolvingAvatar level={level} />
           </div>
 
-          {/* User Info (Right) */}
-          <div className="flex-1 p-6 sm:p-8 relative z-20 flex flex-col justify-center h-full sm:pl-4">
-            <div className="flex items-center gap-2 mb-2 flex-wrap drop-shadow-md">
-              <h1 className="text-2xl sm:text-4xl font-bold text-white">
+          {/* User Info (Right - approx 2/3) */}
+          <div className="flex-1 p-6 sm:p-8 relative z-20 flex flex-col justify-center items-start w-full pr-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mb-2 drop-shadow-md">
+              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
                 {greeting}
               </h1>
-              <Badge variant="secondary" className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 text-xs sm:text-sm">
-                Lv. {level} {avatar.name}
-              </Badge>
             </div>
             <p className="text-sm text-white/80 mb-6 max-w-sm drop-shadow">
               {avatar.description}
             </p>
 
-            {/* XP Bar */}
-            <div className="max-w-md w-full">
-              <div className="flex justify-between text-xs mb-1.5 drop-shadow">
-                <span className="text-white/80 flex items-center gap-1">
-                  <Sparkles size={12} className="text-cyan-400" /> XP Progress
-                </span>
-                <span className="text-cyan-300 font-bold">{progress.xp}/{progress.xpNeeded}</span>
+
+            {/* XP Bar Header with Sub-label */}
+            <div className="max-w-md w-full mt-auto sm:mt-8">
+              <div className="flex justify-between items-end mb-2 drop-shadow">
+                <div className="flex flex-col">
+                  <span className="text-white/80 flex items-center gap-1.5 text-sm font-medium mb-1">
+                    <Sparkles size={14} className="text-cyan-400" />
+                    Level {level}
+                  </span>
+                  <span className="text-xs text-cyan-200/60 uppercase tracking-widest">{avatar.name} Stage</span>
+                </div>
+                <span className="text-cyan-300 font-bold text-sm bg-cyan-950/50 px-2 py-1 rounded-md border border-cyan-500/20">{progress.xp} / {progress.xpNeeded} XP</span>
               </div>
               <div className="h-3.5 sm:h-4 rounded-full bg-slate-900/60 overflow-hidden border border-white/10 shadow-inner">
                 <motion.div
