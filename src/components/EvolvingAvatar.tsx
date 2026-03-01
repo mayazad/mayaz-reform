@@ -18,7 +18,7 @@ export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
     const stage = getStage(level);
 
     return (
-        <div className="absolute bottom-0 left-0 w-[200px] h-[280px] sm:w-[280px] sm:h-[320px] flex-shrink-0 group z-10 pointer-events-none">
+        <div className="absolute bottom-0 left-0 w-full h-full flex-shrink-0 group z-10 pointer-events-none">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={stage.id}
@@ -43,14 +43,14 @@ export function EvolvingAvatar({ level }: EvolvingAvatarProps) {
                 </motion.div>
             </AnimatePresence>
             {/* Level Badge Overlay (Anchored to character) */}
-            <div className="absolute bottom-16 sm:bottom-20 left-4 sm:left-8 z-30 drop-shadow-2xl pointer-events-auto cursor-help group-hover:scale-110 transition-transform animate-float">
-                <div className="relative w-10 h-10 sm:w-14 sm:h-14">
+            <div className="absolute top-1/2 -translate-y-1/2 left-4 sm:left-12 z-30 drop-shadow-2xl pointer-events-auto cursor-help group-hover:scale-110 transition-transform animate-float">
+                <div className="relative w-12 h-12 sm:w-16 sm:h-16">
                     {/* Outer hexagon/circle shape glow */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${stage.gradient} rounded-xl rotate-45 opacity-60 blur-md`} />
                     <div className={`absolute inset-0 bg-gradient-to-br ${stage.gradient} rounded-xl rotate-45 border border-white/20 flex items-center justify-center shadow-inner backdrop-blur-sm`} />
                     <div className="absolute inset-0 flex flex-col items-center justify-center -rotate-45">
-                        <span className="text-white/60 text-[8px] sm:text-[10px] uppercase font-bold leading-none mb-0.5">Lv</span>
-                        <span className="text-white font-black text-sm sm:text-xl drop-shadow-md leading-none">
+                        <span className="text-white/60 text-[9px] sm:text-[11px] uppercase font-bold leading-none mb-0.5">Lv</span>
+                        <span className="text-white font-black text-lg sm:text-2xl drop-shadow-md leading-none">
                             {level}
                         </span>
                     </div>
