@@ -235,7 +235,7 @@ export default function DashboardPage() {
           { label: 'XP Total', value: `${xp} XP`, icon: Star, color: 'text-violet-400', gradient: 'from-violet-500/15 to-purple-500/10', glow: 'shadow-violet-500/10' },
         ].map((stat, i) => (
           <motion.div key={stat.label} custom={i + 1} initial="hidden" animate="visible" variants={fadeUp}>
-            <Card className={`bg-gradient-to-br ${stat.gradient} backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-300 group cursor-default hover:shadow-lg ${stat.glow}`}>
+            <Card className={`interactive-card bg-gradient-to-br ${stat.gradient} backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-300 group cursor-default hover:shadow-lg ${stat.glow}`}>
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="p-1.5 rounded-lg bg-white/5">
