@@ -106,29 +106,33 @@ export default function DashboardPage() {
         <div className="absolute left-10 bottom-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Unified Flex Container */}
-        <div className="relative flex flex-col sm:flex-row items-center overflow-hidden min-h-[280px]">
-          {/* Avatar Area (Left) */}
-          <div className="relative w-full sm:w-[40%] h-[260px] sm:h-[320px] flex-shrink-0 mt-auto">
+        <div className="relative w-full h-[300px] flex flex-row items-center overflow-hidden rounded-2xl">
+          {/* Left Column (The Avatar - 30% width) */}
+          <div className="relative w-1/3 h-full flex items-end justify-end pr-8 z-10">
             <EvolvingAvatar level={level} />
           </div>
 
-          {/* User Info (Right) */}
-          <div className="flex-1 relative z-20 flex flex-col justify-center items-start w-full py-8 sm:py-10 pr-8 pl-4 sm:pl-8 lg:pl-16">
-            <div className="w-full">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mb-2 drop-shadow-md">
-                <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-                  {greeting}
-                </h1>
-              </div>
-              <p className="text-sm text-white/80 max-w-sm drop-shadow mb-8 sm:mb-12">
-                {avatar.description}
-              </p>
+          {/* Right Column (The Text & Progress - 70% width) */}
+          <div className="relative w-2/3 flex flex-col items-start justify-center pr-12 z-10">
+            {/* The Header Row */}
+            <div className="flex flex-row items-center gap-4 mb-2">
+              <h1 className="text-4xl font-bold text-white">
+                {greeting}
+              </h1>
+              <Badge variant="secondary" className="bg-cyan-500/20 text-cyan-400 border-cyan-500/30 text-sm">
+                Lv. {level} {avatar.name}
+              </Badge>
             </div>
 
-            {/* Bottom XP Bar Header */}
-            <div className="max-w-md w-full">
+            {/* The Subtitle */}
+            <p className="text-sm text-white/80 max-w-sm drop-shadow mb-8 text-left">
+              Just getting started
+            </p>
+
+            {/* The XP Bar */}
+            <div className="w-full max-w-md">
               <div className="flex justify-between items-end mb-2 drop-shadow">
-                <div className="flex flex-col">
+                <div className="flex flex-col text-left">
                   <span className="text-white/80 flex items-center gap-1.5 text-sm font-medium mb-1">
                     <Sparkles size={14} className="text-cyan-400" />
                     Level {level}
